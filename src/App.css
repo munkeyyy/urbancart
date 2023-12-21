@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.ant-modal {
+  right: -58vw !important;
+  margin: unset;
+  top: 70px !important;
+  width: 30vw !important;
+}
+.ant-modal .ant-modal-title {
+  font-size: 1.9vw !important;
+  font-weight: 900 !important;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  background: #1677ff !important;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+.ant-modal .ant-modal-footer{
+  text-align: center;
+  display: none;
+}
+
+.ant-drawer-right>.ant-drawer-content-wrapper{
+  width: 50vw !important;
+}
+
+.ant-drawer .ant-drawer-header-title{
+  flex-direction: row-reverse;
+}
+
+.ant-drawer .ant-drawer-header{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/*  */
+

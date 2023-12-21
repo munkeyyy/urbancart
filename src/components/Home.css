@@ -1,0 +1,4 @@
+.sticked{
+    position: sticky;
+    top: calc(50% - calc((35 / 14) * 1rem));
+}
