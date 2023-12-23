@@ -16,7 +16,7 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res.data);
-        localStorage.setItem("admin", res.data)
+        // localStorage.setItem("admin", res.data)
       })
       .catch((err) => {
         console.log(err);

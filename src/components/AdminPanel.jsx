@@ -1,5 +1,5 @@
 // import React from "react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   MdAttachMoney,
@@ -8,104 +8,89 @@ import {
   MdFastfood,
   MdFoodBank,
 } from "react-icons/md";
-import NavBar from "./NavBar";
 import axios from "axios";
-import { notification } from "antd";
+import { FaPlus } from "react-icons/fa6";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import NewItem from "./NewItem";
+
+
+// Import Swiper styles
+// Import Swiper styles
+
+
+
+// Install Swiper modules
 
 const AdminPanel = () => {
-  const [title, setTitle] = useState("");
-  const [categoryInfo, setCategoryInfo] = useState({category:""});
-  const [categories, setCategories] = useState([]); 
+  const [products, setProducts] = useState([]);
   const token = localStorage.getItem("token");
-  const inputRef = useRef()
-  const getCategories = () => {
-    axios
-      .get("https://react-batch.onrender.com/api/products/get-categories", {
-        headers: {
-          Authorization: `Bearer ` + token,
-        },
-      })
-      .then((res) => setCategories(res.data.data))
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const addCategory = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
     axios
       .post(
-        "https://react-batch.onrender.com/api/products/add-category",
-        { 
-          category: categoryInfo.category,
-        },
+        "https://react-batch.onrender.com/api/products/products-list",
+        {},
         {
           headers: {
-            Authorization: `Bearer ` + token,
-            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
           },
         }
       )
-      .then((res) => {
-        console.log(res.data);
-        getCategories();
-        notification.open({
-          message: "category added successfully",
-          onClick: () => {
-            console.log("Notification Clicked!");
-          },
-        });
-        inputRef.current.value=""
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => setProducts(res.data.data))
+      .catch((err) => console.log(err));
+  }, []);
+  const handleClick = () => {
+    navigate("/adminpanel/add-items");
   };
 
+
   return (
-    <div className="bg-white relative">
-      <NavBar />
-      <div className="flex justify-center py-[2vw] px-[10vw] h-screen bg-gray-100">
-        <div className="border-dashed rounded-md p-[2vw] border-gray-400 border-[1px] h-full w-full flex flex-col">
-          <div className="add mb-4 flex items-center justify-between">
-            <div className="add-cat-title flex gap-4">
-              <input
-                type="text"
-                ref={inputRef}
-                onChange={(e) =>
-                  setCategoryInfo({ ...categoryInfo, category: e.target.value })
-                }
-                name="category"
-                className="w-[30vw] p-3 bg-transparent border-b-[3px] border-dashed focus-visible:borderd-b-[3px] border-gray-400 placeholder:font-semibold"
-                placeholder="Add category"
-              />
-              <button
-                onClick={addCategory}
-                className="px-[1vw] btn py-[.5vw]  text-white text-[1vw] bg-emerald-600 rounded-lg"
-              >
-                Add
-              </button>
-            </div>
-            <div className="add-prod-title flex gap-4">
-              <input
-                type="text"
-                className="w-[30vw] p-3 bg-transparent border-b-[3px] border-dashed focus-visible:borderd-b-[3px] border-gray-400 placeholder:font-semibold"
-                placeholder="Give Me a Title"
-              />
-              <button className="px-[1vw] btn py-[.5vw]  text-white text-[1vw] bg-emerald-600 rounded-lg">
-                Add
-              </button>
-            </div>
-          </div>
-          <div className="slect w-full">
-            <select onClick={()=>{getCategories()}} className="w-full p-2 rounded-lg" name="" id="">
-              <option>Select</option>
-              {categories.map((cat, index) => (
-                <option key={index}>{cat.name}</option>
+    <>
+      <div className="bg-white relative h-screen">
+        <div className="products">
+          <div className="product-cards flex items-center  flex-wrap gap-2">
+            {products &&
+              products.map((elem, i) => (
+                <div
+                  key={i}
+                  className="product-card  h-[507px] w-[366px] bg-[#F7F7F7]"
+                >
+                  <div className="card-inner p-[1vw] relative justify-between gap-44 transition-[all.8s] flex flex-col ">
+                    <button className="btn p-btn bg-[transparent] opacity-0 self-end">
+                      Add to wishlist
+                    </button>
+                    <div className="product-img ">
+                      <img
+                        src={elem.imageUrl}
+                        loading="lazy"
+                        alt="productImage"
+                      />
+                    </div>
+                    <button className="btn p-btn p-[0.6vw] transition-[all.8s] opacity-0 rounded-md bg-white border-2 border-[rgba(74,74,74,0.15)]">
+                      Add To Bag
+                    </button>
+                  </div>
+                  <div className="card-info bg-white">
+                    <div className="flex justify-between">
+                      <p>{elem.name}</p>
+                      <p>{elem.price}</p>
+                    </div>
+                    <p>{elem.description}</p>
+                    <p>{elem.discountedPrice}</p>
+                  </div>
+                </div>
               ))}
-            </select>
           </div>
         </div>
+        <button
+          onClick={handleClick}
+          className="btn px-[1vw] fixed bottom-10 right-5 bg-emra py-2 flex items-center gap-2 text-white font-semibold rounded-lg bg-emerald-600"
+        >
+          <FaPlus /> New Item
+        </button>
+
       </div>
-    </div>
+    </>
   );
 };
 

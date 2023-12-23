@@ -14,6 +14,7 @@ import AdminPanel from "./components/AdminPanel";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import LoginPage from "./components/LoginPage";
+import NewItem from "./components/NewItem";
 
 // ... (your imports)
 
@@ -55,6 +56,8 @@ function App() {
             }
           />
           <Route path="/adminpanel" element={<AdminPanel />} />
+          <Route path={"/adminpanel/add-items"} element={<NewItem/>}/>
+
           <Route  path="/register" element={<Register/>}/>
           <Route path="/loginpage" element={<LoginPage/>}/>
         </Routes>

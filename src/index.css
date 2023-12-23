@@ -41,7 +41,7 @@ code {
     border: none;
     outline: none;
   }
-  .input::placeholder{
+  .input::placeholder, input::placeholder{
     color:  black;
   }
 }
@@ -86,11 +86,11 @@ code {
 }
 @layer components{
   .btn{
-    background: #059669;
+    background: black;
     transition: all .3s;
   }
   .btn:active{
-    transform: scale(.8);
+    transform: scale(.95);
   }
 }
 .login input{
@@ -99,3 +99,11 @@ code {
 .modal input{
   width: 100%;
 }
+
+.p-btn{
+  transition: all .6s;
+}
+
+.product-card:hover .p-btn{
+  opacity: 1;
+} 
