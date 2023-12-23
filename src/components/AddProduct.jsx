@@ -44,8 +44,8 @@ const AddProduct = ({ categories, getCategories }) => {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+        onSubmit={(values) => {
+          //   console.log(values);
           axios
             .post(
               "https://react-batch.onrender.com/api/products/add-product",
@@ -107,36 +107,68 @@ const AddProduct = ({ categories, getCategories }) => {
                   onBlur={handleBlur}
                 >
                   <option className="p-4">Select</option>
-                  {categories.map((cat, index) => (
-                    <option
-                      className="flex items-center gap-44 justify-between"
-                      key={index}
-                    >
-                      {cat.name}
-                    </option>
-                  ))}
+                  {categories ? (
+                    categories.map((cat, index) => (
+                      <option
+                        className="flex items-center gap-44 justify-between"
+                        key={index}
+                      >
+                        {cat.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option>Loading...</option>
+                  )}
                 </select>
                 <p className="text-red-600 text-xs">
                   {errors.category && touched.category && errors.category}
                 </p>
               </div>
               <div className="img-upload h-72 border-dashed border-2   mb-8 border-black mt-9 rounded-md">
-                <label className="w-full h-full  flex  flex-col  items-center justify-center cursor-pointer">
-                  <div className="w-full h-full  flex  flex-col  items-center justify-center">
-                    <MdCloudUpload className="text-gray-800 text-3xl hover:text-black" />
-                    <p className="text-gray-800  hover:text-black ">
-                      Click here to upload
-                    </p>
-                  </div>
-                  <input
-                    type="file"
-                    name="imageUrl"
-                    accept="image/*"
-                    onChange={handleChange}
-                    className="w-0 h-0"
-                    value={values.imageUrl}
-                    onBlur={handleBlur}
-                  />
+                <label className="w-full h-full  flex p-2  flex-col  items-center justify-center cursor-pointer">
+                  {!values.imageUrl ? (
+                    <>
+                      <div className="w-full h-full  flex  flex-col  items-center justify-center">
+                        <MdCloudUpload className="text-gray-800 text-3xl hover:text-black" />
+                        <p className="text-gray-800  hover:text-black ">
+                          Click here to upload
+                        </p>
+                      </div>
+                      <input
+                        type="file"
+                        name="imageUrl"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const selectedFile = e.target.files[0];
+                          const imageUrl = URL.createObjectURL(selectedFile);
+                          handleChange({
+                            target: {
+                              name: "imageUrl",
+                              value: imageUrl,
+                            },
+                          });
+                        }}
+                        className="w-0 h-0"
+                        value={values.imageUrl}
+                        onBlur={handleBlur}
+                      />
+                    </>
+                  ) : (
+                    <div className="relative h-full">
+                      <img
+                        src={values.imageUrl}
+                        className="h-full w-full object-cover"
+                        alt="productImage"
+                      />
+                      {/* <button
+                      type="button"
+                      className="absolute bottom-3 -right-5 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md active:scale-[0.92] transition-all duration-500 ease-in-out "
+                      onClick={deleteImage}
+                    >
+                      <MdDelete className="text-black" />
+                    </button> */}
+                    </div>
+                  )}
                   <p className="text-red-600 text-xs">
                     {errors.imageUrl && touched.imageUrl && errors.imageUrl}
                   </p>
@@ -147,7 +179,7 @@ const AddProduct = ({ categories, getCategories }) => {
                 <input
                   type="text"
                   placeholder=" Add Description"
-                  className="w-[76vw] p-[3vw] bg-[transparent] border-[1px] rounded-md  border-black"
+                  className="w-[76vw] p-[3vw] bg-[transparent] break-words border-[1px] rounded-md  border-black"
                   name="description"
                   value={values.description}
                   onChange={handleChange}

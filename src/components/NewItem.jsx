@@ -69,7 +69,7 @@ const NewItem = () => {
       <div className="bg-white relative">
         <div className="flex justify-center py-[2vw] px-[10vw]  bg-gray-100">
           <div className="rounded-md p-[2vw] border-black border-[1px] h-full w-full flex flex-col">
-            <div className="add-cat-title mb-4 md:mb-8 flex self-start md:self-start gap-4">
+            <div className="add-cat-title mb-4 md:mb-8 flex self-start md:self-start gap-2 md:gap-4">
               <input
                 type="text"
                 ref={inputRef}
