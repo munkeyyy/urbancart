@@ -160,13 +160,13 @@ const AddProduct = ({ categories, getCategories }) => {
                         className="h-full w-full object-cover"
                         alt="productImage"
                       />
-                      {/* <button
+                      <button
                       type="button"
                       className="absolute bottom-3 -right-5 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md active:scale-[0.92] transition-all duration-500 ease-in-out "
-                      onClick={deleteImage}
+                      onClick={()=>{values.imageUrl=""}}
                     >
                       <MdDelete className="text-black" />
-                    </button> */}
+                    </button>
                     </div>
                   )}
                   <p className="text-red-600 text-xs">

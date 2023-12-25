@@ -47,13 +47,13 @@ const AdminPanel = () => {
   return (
     <>
       <div className="bg-white relative h-screen">
-        <div className="products">
+        <div className="products p-4">
           <div className="product-cards flex items-center  flex-wrap gap-2">
             {products &&
               products.map((elem, i) => (
                 <div
                   key={i}
-                  className="product-card  h-[507px] w-[366px] bg-[#F7F7F7]"
+                  className="product-card   w-[30vw] bg-[#F7F7F7]"
                 >
                   <div className="card-inner p-[1vw] relative justify-between gap-44 transition-[all.8s] flex flex-col ">
                     <button className="btn p-btn bg-[transparent] opacity-0 self-end">
