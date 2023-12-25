@@ -51,7 +51,7 @@ function App() {
       .to(".parallax-favourites", { y: "-50%" })
       .to(".parallax-apparel", { y: "0%" })
       .to(".parallax-school", { y: "-10%" })
-      .fromTo(".parallax-branding", { y: "-50%" }, {
+      .fromTo(".parallax-branding", { y: "-30%" }, {
         y: "0",
         delay: 1,
       })

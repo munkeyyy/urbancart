@@ -23,7 +23,7 @@ const Branding = () => {
         trigger: paths[0],
         start: "top bottom",
         end: "bottom top",
-        scrub: 1.5,
+        scrub: 1,
       },
     });
   }, []);
