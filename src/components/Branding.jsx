@@ -10,7 +10,7 @@ const Branding = () => {
     gsap.set(paths, { y: (index) => -110 * (index + 1) });
 
     gsap.to(paths, {
-      y: 0,
+      y: -5,
       ease: "power2.out",
       delay:8,
       stagger: {
@@ -26,6 +26,8 @@ const Branding = () => {
         scrub: 1,
       },
     });
+
+   
   }, []);
   const paths = [
     {
@@ -64,7 +66,7 @@ const Branding = () => {
   return (
     <>
     <div
-      className="p-4 hidden lg:block md:hidden sm:hidden svg w-full h-[90vh] "
+      className="p-4 hidden lg:block md:hidden sm:hidden svg w-full h-[95vh] "
       ref={scrollRef}
     //   style={{ height: "600px", }}
     >

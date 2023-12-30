@@ -35,27 +35,26 @@ function App() {
     const scrollContainer = scrollRef.current;
 
     // Create a GSAP timeline for the parallax effect
-    const parallaxTimeline = gsap.timeline({
-      defaults: { ease: "power2.out" },
-      scrollTrigger: {
-        trigger: scrollContainer,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-      },
-    });
-
-    // Define parallax animations for each section
-    parallaxTimeline
-      .to(".parallax-home", { y: "-50%" })
-      .to(".parallax-favourites", { y: "-50%" })
-      .to(".parallax-apparel", { y: "0%" })
-      .to(".parallax-school", { y: "-10%" })
-      .fromTo(".parallax-branding", { y: "-30%" }, {
-        y: "0",
-        delay: 1,
+    const parallaxTimeline = gsap
+      .timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: {
+          trigger: scrollContainer,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
       })
-      
+      .to(".parallax-school", { y: "-10%" })
+      .fromTo(
+        ".parallax-branding",
+        { y: "-50%" },
+        {
+          y: "0%",
+          delay: 1,
+        }
+      );
+
     return () => {
       // Clean up GSAP animations when the component is unmounted
       parallaxTimeline.kill();
