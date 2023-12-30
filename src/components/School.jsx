@@ -31,7 +31,7 @@ const School = () => {
           <img
            
             ref={imgRef}
-            className="h-[100%] scale-[2.5] object-cover object-left-top  w-[100%]"
+            className="h-[100%] scale-[3] object-[100%]  w-[100%]"
             src={schoolBg}
             alt="school-bg"
           />
