@@ -20,6 +20,7 @@ const School = () => {
       scale: 1,
       objectPosition:"bottom",
       // marginTop:"-2%",
+      delay:1,
       ease: "power1.inOut",
     });
   }, []);
@@ -31,7 +32,7 @@ const School = () => {
           <img
            
             ref={imgRef}
-            className="h-[100%] scale-[3] object-[100%]  w-[100%]"
+            className="h-[100%] scale-[2] object-[100%]  w-[100%]"
             src={schoolBg}
             alt="school-bg"
           />
