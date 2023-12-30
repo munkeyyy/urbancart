@@ -45,12 +45,12 @@ function App() {
           scrub: true,
         },
       })
-      .to(".parallax-school", { y: "-10%" })
+      .fromTo(".parallax-school", { y: "-50%" },{y:"0%"})
       .fromTo(
         ".parallax-branding",
         { y: "-50%" },
         {
-          y: "0%",
+          y: "10%",
           delay: 1,
         }
       );

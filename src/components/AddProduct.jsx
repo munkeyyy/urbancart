@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
+import { notification } from "antd";
 import {
   MdAttachMoney,
   MdCloudUpload,
@@ -10,7 +11,7 @@ import {
 import axios from "axios";
 const AddProduct = ({ categories, getCategories }) => {
   const token = localStorage.getItem("token");
-
+  // console.log(categories)
   return (
     <div>
       <Formik
@@ -63,8 +64,17 @@ const AddProduct = ({ categories, getCategories }) => {
                 },
               }
             )
-            .then((res) => console.log(res.data))
+            .then((res) => {console.log(res.data)
+              notification.open({
+                message: `Product added successfully`,
+                onClick: () => {
+                  console.log("Notification Clicked!");
+                },
+              });
+            })
             .catch((err) => console.log(err));
+
+          // console.log(categories)
         }}
       >
         {({
@@ -112,6 +122,7 @@ const AddProduct = ({ categories, getCategories }) => {
                       <option
                         className="flex items-center gap-44 justify-between"
                         key={index}
+                        value={cat._id}
                       >
                         {cat.name}
                       </option>
@@ -125,50 +136,24 @@ const AddProduct = ({ categories, getCategories }) => {
                 </p>
               </div>
               <div className="img-upload h-72 border-dashed border-2   mb-8 border-black mt-9 rounded-md">
-                <label className="w-full h-full  flex p-2  flex-col  items-center justify-center cursor-pointer">
-                  {!values.imageUrl ? (
-                    <>
-                      <div className="w-full h-full  flex  flex-col  items-center justify-center">
-                        <MdCloudUpload className="text-gray-800 text-3xl hover:text-black" />
-                        <p className="text-gray-800  hover:text-black ">
-                          Click here to upload
-                        </p>
-                      </div>
-                      <input
-                        type="file"
-                        name="imageUrl"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const selectedFile = e.target.files[0];
-                          const imageUrl = URL.createObjectURL(selectedFile);
-                          handleChange({
-                            target: {
-                              name: "imageUrl",
-                              value: imageUrl,
-                            },
-                          });
-                        }}
-                        className="w-0 h-0"
-                        value={values.imageUrl}
-                        onBlur={handleBlur}
-                      />
-                    </>
-                  ) : (
-                    <div className="relative h-full">
-                      <img
-                        src={values.imageUrl}
-                        className="h-full w-full object-cover"
-                        alt="productImage"
-                      />
-                      <button
-                      type="button"
-                      className="absolute bottom-3 -right-5 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md active:scale-[0.92] transition-all duration-500 ease-in-out "
-                      onClick={()=>{values.imageUrl=""}}
-                    >
-                      <MdDelete className="text-black" />
-                    </button>
-                    </div>
-                  )}
+                <label className="w-full h-full  flex p-2  flex-col  items-center justify-center">
+                  <>
+                    {/* <div className="w-full h-full  flex  flex-col  items-center justify-center">
+                      <MdCloudUpload className="text-gray-800 text-3xl hover:text-black" />
+                      <p className="text-gray-800  hover:text-black ">
+                        Click here to upload
+                      </p>
+                    </div> */}
+                    <input
+                      type="text"
+                      name="imageUrl"
+                      onChange={handleChange}
+                      className="w-0 h-0"
+                      value={values.imageUrl}
+                      onBlur={handleBlur}
+                    />
+                  </>
+
                   <p className="text-red-600 text-xs">
                     {errors.imageUrl && touched.imageUrl && errors.imageUrl}
                   </p>

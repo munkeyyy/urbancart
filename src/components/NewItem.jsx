@@ -19,6 +19,7 @@ const NewItem = () => {
   const [categories, setCategories] = useState([]);
   const token = localStorage.getItem("token");
   const inputRef = useRef();
+  
   const getCategories = () => {
     axios
       .get("https://react-batch.onrender.com/api/products/get-categories", {
@@ -26,7 +27,10 @@ const NewItem = () => {
           Authorization: `Bearer ` + token,
         },
       })
-      .then((res) => setCategories(res.data.data))
+      .then((res) => {
+        setCategories(res.data.data);
+        console.log(res.data);
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -66,6 +70,7 @@ const NewItem = () => {
         console.log(err);
       });
   };
+  console.log(categoryInfo)
   return (
     <div>
       <div className="bg-gray-100 relative">
@@ -81,12 +86,12 @@ const NewItem = () => {
               <input
                 type="text"
                 ref={inputRef}
-                onChange={(e) =>
+                onChange={(e) => {
                   setCategoryInfo({
                     ...categoryInfo,
                     category: e.target.value,
-                  })
-                }
+                  });
+                }}
                 name="category"
                 className="lg:w-[71vw] md:w-[69vw]  sm:w-[68.8vw] w-[67vw] p-3 bg-transparent border-b-[1px] focus-visible:borderd-b-[2px] border-black"
                 placeholder="Add category"
