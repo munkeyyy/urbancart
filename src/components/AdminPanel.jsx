@@ -12,12 +12,9 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa6";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import NewItem from "./NewItem";
-
-
+import { notification } from "antd";
 // Import Swiper styles
 // Import Swiper styles
-
-
 
 // Install Swiper modules
 
@@ -36,13 +33,26 @@ const AdminPanel = () => {
           },
         }
       )
-      .then((res) => setProducts(res.data.data))
+      .then((res) => {
+        setProducts(res.data.data);
+        console.log(res.data.data);
+      })
       .catch((err) => console.log(err));
+    console.log(products);
   }, []);
   const handleClick = () => {
     navigate("/adminpanel/add-items");
   };
 
+  const handleDelete = (productId) => {
+    setProducts(products.filter((product) => product._id !== productId));
+    notification.open({
+      message: `Product deleted successfully`,
+      onClick: () => {
+        console.log("Notification Clicked!");
+      },
+    });
+  };
 
   return (
     <>
@@ -67,17 +77,29 @@ const AdminPanel = () => {
                         className="h-[100%] w-[100%] object-cover"
                       />
                     </div>
-                    <button className="btn p-btn p-[0.6vw] transition-[all.8s] opacity-0 rounded-md bg-white border-2 border-[rgba(74,74,74,0.15)] hover:bg-red-400 hover:text-white">
+                    <button
+                      onClick={() => handleDelete(elem._id)}
+                      className="btn p-btn p-[0.6vw] transition-[all.8s] opacity-0 rounded-md bg-white border-2 border-[rgba(74,74,74,0.15)] hover:bg-red-400 hover:text-white"
+                    >
                       Delete Product
                     </button>
                   </div>
                   <div className="card-info bg-white">
                     <div className="flex justify-between">
-                      <p className="font-semibold">{elem.name}</p>
-                      <p><del>Rs.{elem.price}</del></p>
+                      <p className="font-semibold text-[2vw] md:text-[1vw] lg:text-[1.2vw]">{elem.name}</p>
+                      <p className="text-[1.8vw] md:text-[1.1vw]">
+                        <del>Rs.{elem.price}</del>
+                      </p>
                     </div>
-                    <p className="text-left my-2">{elem.description.length>50?elem.description.slice(0,150)+"...":elem.description}</p>
-                    <p className="text-right"><span className="font-semibold">Discounted Price: </span>Rs.{elem.discountedPrice}</p>
+                    <p className="text-left my-2 text-[1.8vw] md:text-[1.1vw]">
+                      {elem.description.length > 50
+                        ? elem.description.slice(0, 150) + "..."
+                        : elem.description}
+                    </p>
+                    <p className="text-right text-[1.8vw] md:text-[1.1vw]">
+                      <span className="font-semibold">Discounted Price: </span>
+                      Rs.{elem.discountedPrice}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -89,7 +111,6 @@ const AdminPanel = () => {
         >
           <FaPlus /> New Item
         </button>
-
       </div>
     </>
   );
