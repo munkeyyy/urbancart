@@ -17,6 +17,8 @@ import LoginPage from "./components/LoginPage";
 import NewItem from "./components/NewItem";
 import Branding from "./components/Branding";
 import gsap from "gsap";
+import { Provider } from "react-redux";
+import store from "./store/store";
 // ... (your imports)
 
 function App() {
@@ -45,7 +47,7 @@ function App() {
           scrub: true,
         },
       })
-      .fromTo(".parallax-school", { y: "-50%" },{y:"0%"})
+      .fromTo(".parallax-school", { y: "-50%" }, { y: "0%" })
       .fromTo(
         ".parallax-branding",
         { y: "-50%" },
@@ -62,37 +64,39 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div ref={scrollRef}>
-                <Home className="parallax-home" />
-                <Favourites className="parallax-favourites" />
-                <div className="parallax-apparel relative z-10">
-                  <Apparel />
-                </div>
+    <Provider store={store}>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div ref={scrollRef}>
+                  <Home className="parallax-home" />
+                  <Favourites className="parallax-favourites" />
+                  <div className="parallax-apparel relative z-10">
+                    <Apparel />
+                  </div>
 
-                <div className="parallax-school relative z-[1]">
-                  <School />
-                </div>
+                  <div className="parallax-school relative z-[1]">
+                    <School />
+                  </div>
 
-                <div className="parallax-branding">
-                  <Branding />
+                  <div className="parallax-branding">
+                    <Branding />
+                  </div>
                 </div>
-              </div>
-            }
-          />
-          <Route path="/adminpanel" element={<AdminPanel />} />
-          <Route path={"/adminpanel/add-items"} element={<NewItem />} />
+              }
+            />
+            <Route path="/adminpanel" element={<AdminPanel />} />
+            <Route path={"/adminpanel/add-items"} element={<NewItem />} />
 
-          <Route path="/register" element={<Register />} />
-          <Route path="/loginpage" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            <Route path="/register" element={<Register />} />
+            <Route path="/loginpage" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </Provider>
   );
 }
 

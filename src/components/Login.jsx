@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const stateData=useSelector((state)=>state.userDetails.name)
   const getUserDetails = () => {
     const token = localStorage.getItem("token");
     axios
@@ -17,6 +20,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
         // localStorage.setItem("admin", res.data)
+        dispatch({type:"UPDATE_USER-DETAILS", payload:{name:res.data.firstName}})
       })
       .catch((err) => {
         console.log(err);
