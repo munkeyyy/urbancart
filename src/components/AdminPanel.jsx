@@ -12,7 +12,8 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa6";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import NewItem from "./NewItem";
-import { notification } from "antd";
+import { notification, Modal } from "antd";
+
 // Import Swiper styles
 // Import Swiper styles
 
@@ -20,6 +21,16 @@ import { notification } from "antd";
 
 const AdminPanel = () => {
   const [products, setProducts] = useState([]);
+  const [selctedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,7 +45,6 @@ const AdminPanel = () => {
         }
       )
       .then((res) => {
-        
         setProducts(res.data.data);
         console.log(res.data.data);
       })
@@ -62,16 +72,22 @@ const AdminPanel = () => {
           <div className="product-cards flex items-center  flex-wrap gap-2">
             {products &&
               products.map((elem, i) => {
-                const discountedPercenatge=((elem.price-elem.discountedPrice)/elem.price)*100;
-               
-
+                const discountedPercenatge =
+                  ((elem.price - elem.discountedPrice) / elem.price) * 100;
+                const handleEdit = (productId) => {
+                  setSelectedProduct(productId);
+                  setIsModalOpen(true);
+                };
                 return (
                   <div
                     key={i}
                     className="product-card mt-4  w-[30vw] bg-[#F7F7F7]"
                   >
                     <div className="card-inner p-[1vw] relative justify-between gap-4 transition-[all.8s] flex flex-col ">
-                      <button className="btn p-btn bg-[transparent] opacity-0 self-end">
+                      <button
+                        onClick={() => handleEdit(elem)}
+                        className="btn p-btn bg-[transparent] opacity-0 self-end"
+                      >
                         Edit Product
                       </button>
                       <div className="product-img w-[20vw] p-4 self-center">
@@ -108,11 +124,19 @@ const AdminPanel = () => {
                           Discounted Price:{" "}
                         </span>
                         Rs.{elem.discountedPrice}
-                        &nbsp;
-                        &nbsp;
-                        <span className="text-[#EA7474]">[-{Math.round(discountedPercenatge)}%]</span>
+                        &nbsp; &nbsp;
+                        <span className="text-[#EA7474]">
+                          [-{Math.round(discountedPercenatge)}%]
+                        </span>
                       </p>
                     </div>
+                    <Modal
+                      className="text-[1.5vw] modal"
+                      title="modal-title"
+                      open={isModalOpen}
+                      onOk={handleOk}
+                      onCancel={handleCancel}
+                    ></Modal>
                   </div>
                 );
               })}
