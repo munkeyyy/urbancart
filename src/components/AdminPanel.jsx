@@ -10,7 +10,7 @@ import {
 } from "react-icons/md";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa6";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import NewItem from "./NewItem";
 import { notification, Modal } from "antd";
 
@@ -35,8 +35,8 @@ const AdminPanel = () => {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .post(
-        "https://react-batch.onrender.com/api/products/products-list",
+      .get(
+        "https://fakestoreapi.com/products",
         {},
         {
           headers: {
@@ -45,8 +45,8 @@ const AdminPanel = () => {
         }
       )
       .then((res) => {
-        setProducts(res.data.data);
-        console.log(res.data.data);
+        setProducts(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
     console.log(products);
@@ -56,7 +56,7 @@ const AdminPanel = () => {
   };
 
   const handleDelete = (productId) => {
-    setProducts(products.filter((product) => product._id !== productId));
+    setProducts(products.filter((product) => product.id !== productId));
     notification.open({
       message: `Product deleted successfully`,
       onClick: () => {
@@ -68,8 +68,16 @@ const AdminPanel = () => {
   return (
     <>
       <div className="bg-white relative h-screen">
+        <div className="flex justify-start p-4">
+          <Link
+            to={"/"}
+            className="logo text-white bg-black py-1 px-3 relative text-lg font-[700] -rotate-[5deg]"
+          >
+            fitsole
+          </Link>
+        </div>
         <div className="products p-4">
-          <div className="product-cards flex items-center  flex-wrap gap-2">
+          <div className="product-cards flex items-center  flex-wrap gap-12">
             {products &&
               products.map((elem, i) => {
                 const discountedPercenatge =
@@ -81,7 +89,7 @@ const AdminPanel = () => {
                 return (
                   <div
                     key={i}
-                    className="product-card mt-4  w-[30vw] bg-[#F7F7F7]"
+                    className="product-card mt-4 h-[100%]  w-[30%] bg-[#F7F7F7]"
                   >
                     <div className="card-inner p-[1vw] relative justify-between gap-4 transition-[all.8s] flex flex-col ">
                       <button
@@ -90,16 +98,16 @@ const AdminPanel = () => {
                       >
                         Edit Product
                       </button>
-                      <div className="product-img w-[20vw] p-4 self-center">
+                      <div className="product-img w-[100%] h-[15vw] p-4 self-center">
                         <img
-                          src={elem.imageUrl}
+                          src={elem.image}
                           loading="lazy"
                           alt="productImage"
-                          className="h-[100%] w-[100%] object-cover"
+                          className="h-[100%] w-[100%] object-contain"
                         />
                       </div>
                       <button
-                        onClick={() => handleDelete(elem._id)}
+                        onClick={() => handleDelete(elem.id)}
                         className="btn p-btn p-[0.6vw] transition-[all.8s] opacity-0 rounded-md bg-white border-2 border-[rgba(74,74,74,0.15)] hover:bg-red-400 hover:text-white"
                       >
                         Delete Product
@@ -111,7 +119,7 @@ const AdminPanel = () => {
                           {elem.name}
                         </p>
                         <p className="text-[1.8vw] md:text-[1.1vw]">
-                          <del>Rs.{elem.price}</del>
+                          Rs.{elem.price}
                         </p>
                       </div>
                       <p className="text-left my-2 text-[1.8vw] md:text-[1.1vw]">
@@ -119,7 +127,7 @@ const AdminPanel = () => {
                           ? elem.description.slice(0, 150) + "..."
                           : elem.description}
                       </p>
-                      <p className="text-right text-[1.8vw] md:text-[1.1vw]">
+                      {/* <p className="text-right text-[1.8vw] md:text-[1.1vw]">
                         <span className="font-semibold">
                           Discounted Price:{" "}
                         </span>
@@ -128,7 +136,7 @@ const AdminPanel = () => {
                         <span className="text-[#EA7474]">
                           [-{Math.round(discountedPercenatge)}%]
                         </span>
-                      </p>
+                      </p> */}
                     </div>
                     <Modal
                       className="text-[1.5vw] modal"

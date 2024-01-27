@@ -106,7 +106,6 @@ const Branding = () => {
             key={index}
             d={path.d}
             fill={path.fill}
-            // Adjust the starting position
           />
         ))}
       </svg>

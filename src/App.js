@@ -19,11 +19,12 @@ import Branding from "./components/Branding";
 import gsap from "gsap";
 import { Provider } from "react-redux";
 import store from "./store/store";
-// ... (your imports)
+import Lenis from "@studio-freight/lenis";
+
 
 function App() {
   const scrollRef = useRef(null);
-
+  
   // useEffect(() => {
   //   const scroll = new LocomotiveScroll({
   //     el: scrollRef.current,
@@ -33,6 +34,21 @@ function App() {
   //     scroll.destroy();
   //   };
   // }, []);
+
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    lenis.on("scroll", (e) => {
+      // console.log(e);
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  }, []);
   useEffect(() => {
     const scrollContainer = scrollRef.current;
 
@@ -67,6 +83,8 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
+        <NavBar/>
+
           <Routes>
             <Route
               path="/"
@@ -74,6 +92,7 @@ function App() {
                 <div ref={scrollRef}>
                   <Home className="parallax-home" />
                   <Favourites className="parallax-favourites" />
+                  <Arrivals/>
                   <div className="parallax-apparel relative z-10">
                     <Apparel />
                   </div>

@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const stateData=useSelector((state)=>state.userDetails.name)
+  const dispatch = useDispatch();
+  const stateData = useSelector((state) => state.userDetails.name);
   const getUserDetails = () => {
     const token = localStorage.getItem("token");
     axios
-      .get("https://react-batch.onrender.com/api/user/details", {
+      .get("https://fakestoreapi.com/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -20,7 +20,10 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
         // localStorage.setItem("admin", res.data)
-        dispatch({type:"UPDATE_USER-DETAILS", payload:{name:res.data.firstName}})
+        dispatch({
+          type: "UPDATE_USER-DETAILS",
+          payload: { name: res.data[0].name.firstname},
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -29,21 +32,17 @@ const Login = () => {
   return (
     <div className="login form">
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ username: "", password: "" }}
         validate={(values) => {
           const errors = {};
-          if (!values.email) {
-            errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = "Invalid email address";
+          if (!values.username) {
+            errors.username = "Required";
           }
 
           if (!values.password) {
             errors.password = "Password is Required";
-          }else if(values.password<5){
-            errors.password="Password must coantain atleast 5 charcacters"
+          } else if (values.password < 5) {
+            errors.password = "Password must coantain atleast 5 charcacters";
           }
           return errors;
         }}
@@ -51,33 +50,39 @@ const Login = () => {
           setSubmitting(false);
           axios
             .post(
-              "https://react-batch.onrender.com/api/user/login",
+              "https://fakestoreapi.com/auth/login",
 
               {
-                email: values.email,
+                username: values.username,
                 password: values.password,
               }
             )
             .then((res) => {
-              console.log(res.data)
+              console.log(res.data);
               localStorage.setItem("token", res.data.token);
-              // localStorage.setItem("admin",{ema})
-              const token = localStorage.getItem("token");
 
+              // localStorage.setItem("admin",{ema})
+              dispatch({ type: "UPDATE_USER_LOGGED_IN", payload: true });
+
+              const token = localStorage.getItem("token");
+              console.log(token)
               if (!token) {
                 notification.open({
                   message: "unauthorized user",
                 });
-                navigate("/loginpage")
+                navigate("/loginpage");
               } else {
                 notification.open({
                   message: "Logged in Successfully",
                 });
-                navigate("/adminpanel")
+                navigate("/adminpanel");
               }
               getUserDetails();
             })
             .catch((err) => {
+              notification.open({
+                message: "unauthorized user",
+              }) 
               console.log(err);
             });
         }}
@@ -95,11 +100,11 @@ const Login = () => {
           <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-1">
               <input
-                type="email"
-                name="email"
+                type="text"
+                name="username"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.email}
+                value={values.username}
                 placeholder="Email"
                 className="border  rounded-sm p-[.5vw]  border-black focus-visible:outline focus-visible:outline-black"
               />

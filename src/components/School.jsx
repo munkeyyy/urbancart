@@ -25,7 +25,7 @@ const School = () => {
     });
   }, []);
   return (
-    <div ref={schoolRef} className="h-screen  overflow-hidden  relative">
+    <div ref={schoolRef} className="h-screen  overflow-hidden  sticky top-0 ">
       <div className="image-cont flex flex-col  items-end h-[100%] w-[100%] ">
         <img
           ref={imgRef}

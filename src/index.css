@@ -90,7 +90,7 @@ code {
     transition: all .3s;
   }
   .btn:active{
-    transform: scale(.95);
+    transform: scale(.975);
   }
 }
 .login input{

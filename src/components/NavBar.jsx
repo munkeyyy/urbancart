@@ -3,8 +3,11 @@ import { CiHeart } from "react-icons/ci";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "antd";
-import {Drawer } from 'antd';
+import { Drawer } from "antd";
+import { useSelector } from "react-redux";
 import Login from "./Login";
+import Cart from "./Cart";
+import { useDispatch } from "react-redux";
 
 const NavBar = () => {
   // const[color, setColor]=useState("black")
@@ -48,9 +51,17 @@ const NavBar = () => {
   const onClose = () => {
     setOpen(false);
   };
-  
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isAddedToCart = useSelector((state) => state.isAddedToCart);
+  const itemAdded = useSelector((state) => state.itemAdded);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch({ type: "UPDATE_USER_LOGGED_IN", payload: false });
+    console.log(dispatch);
+  };
   return (
-    <div className="relative">
+    <div className="fixed top-0 w-full z-[99]">
       <div className="py-[1vw] bg-white text-[0.9vw] sticky top-0 text-white bg-[transparent]  z-[100]  px-[1vw] w-full flex items-center justify-between">
         <Link
           to={"/"}
@@ -91,21 +102,66 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <div className="flex items-center gap-8">
-          <button onClick={showModal} className="nav-btn text-black">My Account</button>
+        <div className="flex items-center relative gap-8">
+          <button onClick={showModal} className="nav-btn text-black">
+            {isLoggedIn ? "ROHIT" : "My Account"}
+          </button>
           <button className="nav-btn text-black">WishList</button>
-          <button onClick={showDrawer} className="nav-btn text-black">Bag</button>
+          <button onClick={showDrawer} className="nav-btn text-black">
+            Bag
+          </button>
+          {itemAdded > 0 && (
+            <div className="absolute right-[-0.6vw] top-[-0.4vw] bg-black p-2 text-xs font-medium text-white rounded-full h-3 w-3 flex items-center justify-center">
+              {itemAdded}
+            </div>
+          )}
         </div>
       </div>
-      <Modal className="text-[1.5vw] modal" title="Login" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Login/>
+      <Modal
+        className="text-[1.5vw] modal"
+        title="Login"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        {isLoggedIn ? (
+          <button
+            className="btn text-white rounded-md p-2"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
+        ) : (
+          <Login />
+        )}
       </Modal>
-      <Drawer title="Your Bag" className="text-[1.5vw] relative flex flex-col justify-between"  placement="right" onClose={onClose} open={open}>
-        <h1 className="text-[4vw] font-bold text-justify leading-[8.3vh]">WANT TO ADD SOMETHING TO YOUR BAG?</h1>
-        <div className="text-[1vw]">Lorem ipsum dolor sit amet consectetur shkhkhshkhskh akhlahuapupa jaopjopaj aopaapj ahkjhkhihoihoihihoihaihiahioaiouajoaihiahilhaihalhklahklakkl.aljaljajpajpua0uai[aajajiojaijiaiiaayfigaui] adipisicing elit. Doloribus, enim necessitatibus, quam quia dolorum quos eum veniam dolore tempora iste qui saepe quidem vitae. Ipsa ad molestiae tenetur necessitatibus saepe ipsam, reiciendis magni doloribus dolorum! Voluptates quia quaerat aliquam. Molestias, dolorum quidem eligendi vero magnam optio delectus pariatur. Architecto tempore non ullam debitis magnam cum amet eligendi, voluptatum maiores nihil repellat error consequuntur modi delectus adipisci voluptas dolor ea nam quibusdam harum aut sapiente magni neque. Ullam nobis molestiae, quam voluptatibus doloremque reprehenderit? Esse culpa explicabo facere, fuga soluta aliquam optio aperiam distinctio veniam vel. Minus asperiores ut laborum ullam. Ab eaque velit laudantium sit culpa, aperiam ipsa soluta animi ullam cupiditate asperiores doloribus, labore nisi assumenda illo dolore esse earum. Perferendis, vitae labore dolor debitis eum voluptatem soluta. Beatae deserunt facilis fuga nobis pariatur itaque nisi facere inventore cupiditate voluptates et voluptate cumque architecto, exercitationem modi, quaerat magnam, eum id eos quis harum quod corporis aspernatur. Incidunt, repellendus a. Laudantium esse eveniet, doloremque atque tempore asperiores cum ipsam praesentium incidunt perspiciatis facilis repellendus! Dolorum necessitatibus sint impedit accusantium enim voluptatem at, corporis sunt laboriosam dolores rerum ea doloremque culpa atque deserunt amet, in nostrum consequuntur delectus, suscipit magni molestias?</div>
-        <div className="bg-white border-black border-t-[1px] p-[1vw]">
-          <button className="bg-black text-white w-[100%] rounded-md p-[.5vw]">Go shopping</button>
-        </div>
+      <Drawer
+        title="Your Products"
+        className="text-[1.5vw] relative flex flex-col justify-between"
+        placement="right"
+        onClose={onClose}
+        open={open}
+      >
+        {isAddedToCart ? (
+          <div className="relative overflow-hidden">
+            <Cart  />
+           <div className="fixed bottom-0 bg-white p-4 w-[47%] mt-4">
+            <button className="btn rounded-md text-white p-4 w-[100%]">CheckOut</button>
+           </div>
+          </div>
+        ) : (
+          <div>
+            <h1 className="text-[4vw] font-bold text-justify leading-[8.3vh]">
+              WANT TO ADD SOMETHING TO YOUR BAG?
+            </h1>
+
+            <div className="bg-white border-black border-t-[1px] p-[1vw]">
+              <button className="bg-black text-white w-[100%] rounded-md p-[.5vw]">
+                Go shopping
+              </button>
+            </div>
+          </div>
+        )}
       </Drawer>
     </div>
   );

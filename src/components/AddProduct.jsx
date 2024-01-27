@@ -11,14 +11,18 @@ import {
 import axios from "axios";
 const AddProduct = ({ categories, getCategories }) => {
   const token = localStorage.getItem("token");
-  // console.log(categories)
+  console.log(categories,'KKKKK')
+
+  useEffect(()=>{
+    getCategories()
+  },[])
   return (
     <div>
       <Formik
         initialValues={{
           name: "",
           category: "",
-          imageUrl: "",
+          image: "",
           description: "",
           price: "",
           discountedPrice: "",
@@ -31,8 +35,8 @@ const AddProduct = ({ categories, getCategories }) => {
           if (!values.category) {
             errors.category = "Please slect a category";
           }
-          if (!values.imageUrl) {
-            errors.imageUrl = "Please add an image";
+          if (!values.image) {
+            errors.image = "Please add an image";
           }
           if (!values.description) {
             errors.description = "Please add a decsiption";
@@ -49,13 +53,12 @@ const AddProduct = ({ categories, getCategories }) => {
           //   console.log(values);
           axios
             .post(
-              "https://react-batch.onrender.com/api/products/add-product",
+              "https://fakestoreapi.com/products",
               {
                 name: values.name,
                 description: values.description,
                 price: values.price,
-                discountedPrice: values.discountedPrice,
-                imageUrl: values.imageUrl,
+                image: values.image,
                 category: values.category,
               },
               {
@@ -107,9 +110,7 @@ const AddProduct = ({ categories, getCategories }) => {
               </div>
               <div className="slect w-full">
                 <select
-                  onMouseOver={() => {
-                    getCategories();
-                  }}
+              
                   onChange={handleChange}
                   className="w-full p-2 flex items-center justify-between rounded-lg"
                   name="category"
@@ -122,9 +123,9 @@ const AddProduct = ({ categories, getCategories }) => {
                       <option
                         className="flex items-center gap-44 justify-between"
                         key={index}
-                        value={cat._id}
+                        value={cat}
                       >
-                        {cat.name}
+                        {cat}
                       </option>
                     ))
                   ) : (
@@ -138,24 +139,24 @@ const AddProduct = ({ categories, getCategories }) => {
               <div className="img-upload h-72 border-dashed border-2   mb-8 border-black mt-9 rounded-md">
                 <label className="w-full h-full  flex p-2  flex-col  items-center justify-center">
                   <>
-                    {/* <div className="w-full h-full  flex  flex-col  items-center justify-center">
+                    <div className="w-full h-full  flex  flex-col  items-center justify-center">
                       <MdCloudUpload className="text-gray-800 text-3xl hover:text-black" />
                       <p className="text-gray-800  hover:text-black ">
                         Click here to upload
                       </p>
-                    </div> */}
+                    </div>
                     <input
-                      type="text"
-                      name="imageUrl"
+                      type="file"
+                      name="image"
                       onChange={handleChange}
                       className="w-0 h-0"
-                      value={values.imageUrl}
+                      value={values.image}
                       onBlur={handleBlur}
                     />
                   </>
 
                   <p className="text-red-600 text-xs">
-                    {errors.imageUrl && touched.imageUrl && errors.imageUrl}
+                    {errors.image && touched.image && errors.image}
                   </p>
                 </label>
               </div>

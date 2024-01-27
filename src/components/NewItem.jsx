@@ -22,13 +22,13 @@ const NewItem = () => {
   
   const getCategories = () => {
     axios
-      .get("https://react-batch.onrender.com/api/products/get-categories", {
+      .get("https://fakestoreapi.com/products/categories", {
         headers: {
           Authorization: `Bearer ` + token,
         },
       })
       .then((res) => {
-        setCategories(res.data.data);
+        setCategories(res.data);
         console.log(res.data);
       })
       .catch((err) => {
@@ -82,7 +82,7 @@ const NewItem = () => {
 
         <div className="flex justify-center py-[2vw] px-[10vw]  bg-gray-100">
           <div className="rounded-md p-[2vw] border-black border-[1px] h-full w-full flex flex-col">
-            <div className="add-cat-title mb-4 md:mb-8 flex self-start md:self-start gap-2 md:gap-4">
+            {/* <div className="add-cat-title mb-4 md:mb-8 flex self-start md:self-start gap-2 md:gap-4">
               <input
                 type="text"
                 ref={inputRef}
@@ -102,7 +102,7 @@ const NewItem = () => {
               >
                 Add
               </button>
-            </div>
+            </div> */}
             <AddProduct categories={categories} getCategories={getCategories} />
           </div>
         </div>

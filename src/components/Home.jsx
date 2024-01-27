@@ -4,7 +4,7 @@ import shoe from "../images/hero.26fc9f87.png";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Home.css"
-const Home = () => {
+const Home = (cart) => {
   const [isloaded, setIsLoaded] = useState(false);
   // const shoeRef = useRef()
   //  useEffect(() => {
@@ -38,9 +38,7 @@ const Home = () => {
 
   return (
     <div className="home-bg h-screen relative ">
-      <div>
-        <NavBar />
-      </div>
+     
       <div
         // id="offers"
         className="flex  stick items-center  p-3 justify-center  gap-[32vw]"
