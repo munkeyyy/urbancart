@@ -6,41 +6,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Home.css"
 const Home = (cart) => {
   const [isloaded, setIsLoaded] = useState(false);
-  // const shoeRef = useRef()
-  //  useEffect(() => {
-
-  //   shoeRef.current.style="transform:translateY(0) rotate(-30deg); transition:all 4s; "
-  //   const handleAnimationEnd = () => {
-  //     // Add your animation class after the initial animation is completed
-  //     shoeRef.current.classList.add('animate-shoe');
-  //   };
-  //   shoeRef.current.addEventListener('animationend', handleAnimationEnd);
-
-  // }, [])
-
-  // useEffect(() => {
-  //   gsap.registerPlugin(ScrollTrigger);
-
-  //   const tl = gsap.timeline({
-  //     scrollTrigger: {
-  //       trigger: ".cont-1",
-  //       start: `center ${document.documentElement.offsetHeight/1.4}`,
-  //       end: `bottom bottom`,
-  //       scrub: 1,
-  //       // markers:true,
-  //     },
-  //   });
-  //   tl.to("#offers", {
-  //     top: "150%",
-  //     // ease:"power1.inOut",
-  //   });
-  // }, []);
+  const textRef=useRef(null)
+  useEffect(()=>{
+    gsap.timeline({
+      defaults:{ ease: "power2.out" }
+    }).fromTo(textRef.current,{y:"8rem",opacity:0, ease:"power1.in"},{y:"0",opacity:1,ease:"power1.in"})
+  },[])
 
   return (
     <div className="home-bg h-screen relative ">
-     
+      
       <div
         // id="offers"
+        ref={textRef}
         className="flex  stick items-center  p-3 justify-center  gap-[32vw]"
       >
         <p className="text-white font-bold text-[1.5vw] uppercase">

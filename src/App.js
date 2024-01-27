@@ -21,10 +21,10 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import Lenis from "@studio-freight/lenis";
 
-
 function App() {
   const scrollRef = useRef(null);
-  
+  const navRef = useRef(null);
+
   // useEffect(() => {
   //   const scroll = new LocomotiveScroll({
   //     el: scrollRef.current,
@@ -51,7 +51,6 @@ function App() {
   }, []);
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-
     // Create a GSAP timeline for the parallax effect
     const parallaxTimeline = gsap
       .timeline({
@@ -73,17 +72,22 @@ function App() {
         }
       );
 
+  
+
     return () => {
       // Clean up GSAP animations when the component is unmounted
       parallaxTimeline.kill();
     };
   }, []);
 
+
   return (
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
-        <NavBar/>
+     
+            <NavBar />
+        
 
           <Routes>
             <Route
@@ -92,7 +96,7 @@ function App() {
                 <div ref={scrollRef}>
                   <Home className="parallax-home" />
                   <Favourites className="parallax-favourites" />
-                  <Arrivals/>
+                  <Arrivals />
                   <div className="parallax-apparel relative z-10">
                     <Apparel />
                   </div>

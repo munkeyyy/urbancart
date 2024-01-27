@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Login from "./Login";
 import Cart from "./Cart";
 import { useDispatch } from "react-redux";
+import gsap from "gsap";
 
 const NavBar = () => {
   // const[color, setColor]=useState("black")
@@ -60,8 +61,14 @@ const NavBar = () => {
     dispatch({ type: "UPDATE_USER_LOGGED_IN", payload: false });
     console.log(dispatch);
   };
+  const navRef=useRef(null)
+  useEffect(()=>{
+    gsap.timeline({
+      defaults: { ease: "power2.out" },
+    }).from(navRef.current,{y:"-100px",ease:"power1.in", delay:"1s"})
+  },[])
   return (
-    <div className="fixed top-0 w-full z-[99]">
+    <div ref={navRef} className="fixed top-0 w-full z-[99]">
       <div className="py-[1vw] bg-white text-[0.9vw] sticky top-0 text-white bg-[transparent]  z-[100]  px-[1vw] w-full flex items-center justify-between">
         <Link
           to={"/"}
