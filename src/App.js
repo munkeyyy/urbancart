@@ -24,6 +24,7 @@ import Lenis from "@studio-freight/lenis";
 function App() {
   const scrollRef = useRef(null);
   const navRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
   //   const scroll = new LocomotiveScroll({
@@ -49,9 +50,10 @@ function App() {
 
     requestAnimationFrame(raf);
   }, []);
+
   useEffect(() => {
+    // setTimeout(() => setLoading(false), 5000);
     const scrollContainer = scrollRef.current;
-    // Create a GSAP timeline for the parallax effect
     const parallaxTimeline = gsap
       .timeline({
         defaults: { ease: "power2.out" },
@@ -72,39 +74,33 @@ function App() {
         }
       );
 
-  
-
     return () => {
-      // Clean up GSAP animations when the component is unmounted
       parallaxTimeline.kill();
     };
+    
   }, []);
-
-
+  // if (loading) {
+  //   return <LoadingScreen  setLoading={()=>setLoading(false)}/>;
+  // }
   return (
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
-     
-            <NavBar />
-        
-
           <Routes>
             <Route
               path="/"
               element={
                 <div ref={scrollRef}>
+                  <NavBar />
                   <Home className="parallax-home" />
                   <Favourites className="parallax-favourites" />
                   <Arrivals />
                   <div className="parallax-apparel relative z-10">
                     <Apparel />
                   </div>
-
                   <div className="parallax-school relative z-[1]">
                     <School />
                   </div>
-
                   <div className="parallax-branding">
                     <Branding />
                   </div>

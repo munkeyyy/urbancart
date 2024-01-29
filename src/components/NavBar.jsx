@@ -115,13 +115,9 @@ const NavBar = () => {
           </button>
           <button className="nav-btn text-black">WishList</button>
           <button onClick={showDrawer} className="nav-btn text-black">
-            Bag
+            Bag {itemAdded>0&&`[${itemAdded}]`}
           </button>
-          {itemAdded > 0 && (
-            <div className="absolute right-[-0.6vw] top-[-0.4vw] bg-black p-2 text-xs font-medium text-white rounded-full h-3 w-3 flex items-center justify-center">
-              {itemAdded}
-            </div>
-          )}
+          
         </div>
       </div>
       <Modal
