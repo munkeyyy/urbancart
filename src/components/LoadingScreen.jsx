@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 // import StickerPeelOff from "./StickerPeelOff";
 import gsap from "gsap";
-const LoadingScreen = ({ setLoading }) => {
+const LoadingScreen = ({}) => {
   const [width, setWidth] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const loader = useRef(null);
@@ -21,7 +21,7 @@ const LoadingScreen = ({ setLoading }) => {
       tl.to(".text", { y: "150px", ease: "power3.in" });
     }
     if (width === 100) {
-      tl.to(bar.current, { y: "1500px", duration: 1, onComplete: setLoading });
+      tl.to(bar.current, { y: "1500px", duration: 1, });
       tl.to(loader.current, { y: "-1000px", duration: 1, delay: 0.5 });
     }
   }, [width, isRunning]);
@@ -42,7 +42,7 @@ const LoadingScreen = ({ setLoading }) => {
         </div>
       </div>
       <div ref={bar} className="loader p-4 mb-5">
-        <div className="count text-balck font-extrabold mb-2">{width}%</div>
+        <div className="count text-black font-extrabold text-center mb-2">{width}%</div>
         <div
           className="bar h-1  rounded-full bg-black"
           style={{ width: `${width}%`, transition: "width .5s" }}

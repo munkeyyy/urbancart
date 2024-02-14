@@ -9,7 +9,6 @@ import Arrivals from "./components/Arrivals";
 import Apparel from "./components/Apparel";
 import School from "./components/School";
 import LoadingScreen from "./components/LoadingScreen";
-import LocomotiveScroll from "locomotive-scroll";
 import AdminPanel from "./components/AdminPanel";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -20,11 +19,14 @@ import gsap from "gsap";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import Lenis from "@studio-freight/lenis";
-
+import LocomotiveScroll from 'locomotive-scroll';
 function App() {
   const scrollRef = useRef(null);
-  const navRef = useRef(null);
+  const screen= useRef(null);
   const [loading, setLoading] = useState(true);
+
+const locomotiveScroll = new LocomotiveScroll();
+
 
   // useEffect(() => {
   //   const scroll = new LocomotiveScroll({
@@ -36,56 +38,58 @@ function App() {
   //   };
   // }, []);
 
+
+  // useEffect(() => {
+  //   const lenis = new Lenis();
+
+  //   lenis.on("scroll", (e) => {
+  //     // console.log(e);
+  //   });
+
+  //   function raf(time) {
+  //     lenis.raf(time);
+  //     requestAnimationFrame(raf);
+  //   }
+
+  //   requestAnimationFrame(raf);
+  // }, []);
   useEffect(() => {
-    const lenis = new Lenis();
-
-    lenis.on("scroll", (e) => {
-      // console.log(e);
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-  }, []);
-
-  useEffect(() => {
-    // setTimeout(() => setLoading(false), 5000);
+    
     const scrollContainer = scrollRef.current;
+  
+    // setTimeout(() => setLoading(false), 5000);
     const parallaxTimeline = gsap
-      .timeline({
-        defaults: { ease: "power2.out" },
-        scrollTrigger: {
-          trigger: scrollContainer,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-        },
-      })
-      .fromTo(".parallax-school", { y: "-50%" }, { y: "0%" })
-      .fromTo(
-        ".parallax-branding",
-        { y: "-50%" },
-        {
-          y: "10%",
-          delay: 1,
-        }
-      );
+    .timeline({
+      defaults: { ease: "power2.out" },
+      scrollTrigger: {
+        trigger: scrollContainer,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      },
+    })
+    .fromTo(".parallax-school", { y: "-50%" }, { y: "0%" })
+    .fromTo(
+      ".parallax-branding",
+      { y: "-50%",},
+      {
+        y: "15%",
+        delay: 10,
+        duration:5 
+      }
+    );
 
-    return () => {
-      parallaxTimeline.kill();
-    };
     
   }, []);
   // if (loading) {
-  //   return <LoadingScreen  setLoading={()=>setLoading(false)}/>;
+    
+  //   return <div ref={screen}><LoadingScreen /></div>;
   // }
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className="App relative">
         <BrowserRouter>
+        {/* <LoadingScreen/> */}
           <Routes>
             <Route
               path="/"

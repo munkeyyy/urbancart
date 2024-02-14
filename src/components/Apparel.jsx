@@ -18,6 +18,7 @@ const Apparel = () => {
     tl.to(".img", {
       scale: 1,
       delay: 0.2,
+      duration:1,
       ease: "power2.easeInOut",
     });
 
@@ -52,7 +53,7 @@ const Apparel = () => {
           </div>
         </div>
         <div className="womens-apparel w-[50%] relative">
-          <div className="flex justify-center sticky top-[50%] title  z-10 gap-[22vw] p-2">
+          <div className="flex justify-center sticky top-[50%] title  z-10 gap-[21vw] p-2">
             <p className="font-semibold uppercase text-white text-[1.8vw]">
               Womens Apparel
             </p>
@@ -65,6 +66,7 @@ const Apparel = () => {
               src="https://fitsole.shop/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Ffitsole1%2F16a710de-602a-400e-b9d2-45e1663957a6_category-card-women.jpg%3Fauto%3Dcompress%2Cformat&w=1080&q=75"
               alt="mens Apparel"
               className="object-cover scale-[1.3] img h-[100%] w-[100%]"
+              placeholder="blur"
             />
           </div>
         </div>

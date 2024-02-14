@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const stateData = useSelector((state) => state.userDetails.name);
+  const isAdmin = useSelector((state) => state.isAdmin);
   const getUserDetails = () => {
     const token = localStorage.getItem("token");
     axios
@@ -22,7 +22,7 @@ const Login = () => {
         // localStorage.setItem("admin", res.data)
         dispatch({
           type: "UPDATE_USER-DETAILS",
-          payload: { name: res.data[0].name.firstname},
+          payload: { name: res.data[0].name.firstname },
         });
       })
       .catch((err) => {
@@ -65,16 +65,18 @@ const Login = () => {
               dispatch({ type: "UPDATE_USER_LOGGED_IN", payload: true });
 
               const token = localStorage.getItem("token");
-              console.log(token)
+              console.log(token);
               if (!token) {
                 notification.open({
                   message: "unauthorized user",
                 });
                 navigate("/loginpage");
               } else {
+                dispatch({ type: "IS_ADMIN", payload: true });
                 notification.open({
                   message: "Logged in Successfully",
                 });
+
                 navigate("/adminpanel");
               }
               getUserDetails();
@@ -82,7 +84,7 @@ const Login = () => {
             .catch((err) => {
               notification.open({
                 message: "unauthorized user",
-              }) 
+              });
               console.log(err);
             });
         }}
@@ -105,7 +107,7 @@ const Login = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.username}
-                placeholder="Email"
+                placeholder="Username"
                 className="border  rounded-sm p-[.5vw]  border-black focus-visible:outline focus-visible:outline-black"
               />
               <span className="text-[red]">

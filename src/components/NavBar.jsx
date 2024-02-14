@@ -65,7 +65,7 @@ const NavBar = () => {
   useEffect(()=>{
     gsap.timeline({
       defaults: { ease: "power2.out" },
-    }).from(navRef.current,{y:"-100px",ease:"power1.in", delay:"1s"})
+    }).from(navRef.current,{y:"-100px",ease:"power1.in", delay:"1s",duration:1})
   },[])
   return (
     <div ref={navRef} className="fixed top-0 w-full z-[99]">
@@ -135,7 +135,10 @@ const NavBar = () => {
             Log Out
           </button>
         ) : (
+          <>
+          <div className="text-[1vw] font-medium mb-4">Username:"mor_2314", Password: "83r5^_"</div>
           <Login />
+          </>
         )}
       </Modal>
       <Drawer
@@ -145,7 +148,7 @@ const NavBar = () => {
         onClose={onClose}
         open={open}
       >
-        {isAddedToCart ? (
+        {isAddedToCart && itemAdded>0 ? (
           <div className="relative overflow-hidden">
             <Cart  />
            <div className="fixed bottom-0 bg-white p-4 w-[47%] mt-4">

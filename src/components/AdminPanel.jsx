@@ -103,7 +103,7 @@ const AdminPanel = () => {
                           src={elem.image}
                           loading="lazy"
                           alt="productImage"
-                          className="h-[100%] w-[100%] object-contain"
+                          className="h-[100%] w-[100%] object-contain mix-blend-multiply"
                         />
                       </div>
                       <button
@@ -116,7 +116,7 @@ const AdminPanel = () => {
                     <div className="card-info bg-white">
                       <div className="flex justify-between">
                         <p className="font-semibold text-[2vw] md:text-[1vw] lg:text-[1.2vw]">
-                          {elem.name}
+                          {elem.title}
                         </p>
                         <p className="text-[1.8vw] md:text-[1.1vw]">
                           Rs.{elem.price}
